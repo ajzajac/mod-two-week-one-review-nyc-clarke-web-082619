@@ -1,5 +1,42 @@
 class SeasController < ApplicationController
   #define your controller actions here
+  def index
+    @seas = Sea.all
+    render 'index'
+  end
+
+  def new
+    @sea = Sea.new
+    render 'new'
+  end
+
+  def edit
+    @sea = Sea.find(params[:id])
+    render 'edit'
+  end
+
+  def update
+    @sea = Sea.find(params[:id])
+    @sea.update(sea_params)
+    redirect_to @sea
+  end
+
+  def create
+    Sea.create(sea_params)
+    redirect_to seas_path
+  end
+
+  def destroy
+    @sea = Sea.find(params[:id])
+    @sea.destroy
+    redirect_to seas_path
+  end
+
+
+  def show
+    @sea = Sea.find(params[:id])
+    render 'show'
+  end
 
 
   private
@@ -9,5 +46,6 @@ class SeasController < ApplicationController
   def sea_params
     params.require(:sea).permit(:name, :temperature, :bio, :mood, :image_url, :favorite_color, :scariest_creature, :has_mermaids)
   end
+
 
 end
